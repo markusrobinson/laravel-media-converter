@@ -1,0 +1,62 @@
+{
+    "name": "markusrobinson/laravel-media-converter",
+    "description": "Easily & quickly integrate your application with AWS MediaConvert.",
+    "keywords": [
+        "thumbnail generation",
+        "mp4",
+        "optimize",
+        "mediaconvert",
+        "video conversion",
+        "media conversion",
+        "laravel",
+        "aws"
+    ],
+    "homepage": "https://github.com/markusrobinson/laravel-media-converter",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Markus Robinson",
+            "email": "markus@test.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "ext-json": "*",
+        "aws/aws-php-sns-message-validator": "^1.6",
+        "aws/aws-sdk-php": "^3.173"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.0|^6.0",
+        "pestphp/pest": "^1.0",
+        "pestphp/pest-plugin-laravel": "^1.0",
+        "phpunit/phpunit": "^8.0|^9.3",
+        "vlucas/phpdotenv": "^4.2|^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "markusrobinson\\MediaConverter\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "markusrobinson\\MediaConverter\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "markusrobinson\\MediaConverter\\Providers\\MediaConverterServiceProvider"
+            ],
+            "aliases": {
+                "MediaConvert": "markusrobinson\\MediaConverter\\Facades\\MediaConvertFacade"
+            }
+        }
+    }
+}

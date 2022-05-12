@@ -1,0 +1,40 @@
+<?php
+
+namespace markusrobinson\MediaConverter\Tests;
+
+use Illuminate\Support\Facades\Config;
+use markusrobinson\MediaConverter\Providers\MediaConverterServiceProvider;
+use Orchestra\Testbench\TestCase;
+
+class MediaConverterTestCase extends TestCase
+{
+    public $jobSettings = [];
+
+    protected function getPackageProviders($app): array
+    {
+        return [MediaConverterServiceProvider::class];
+    }
+
+    public function initializeDotEnv()
+    {
+        if (! file_exists(__DIR__.'/../.env')) {
+            return;
+        }
+
+        $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+        $dotenv->load();
+    }
+
+    public function initializeSettings()
+    {
+        // let's make sure these config values are set
+        Config::set('media-converter.credentials.key', env('AWS_ACCESS_KEY_ID'));
+        Config::set('media-converter.credentials.secret', env('AWS_SECRET_ACCESS_KEY'));
+        Config::set('media-converter.url', env('AWS_MEDIACONVERT_ACCOUNT_URL'));
+        Config::set('media-converter.iam_arn', env('AWS_IAM_ARN'));
+        Config::set('media-converter.queue_arn', env('AWS_QUEUE_ARN'));
+
+        $configFile = file_get_contents(__DIR__.'/config/job.json');
+        $this->jobSettings = json_decode($configFile, true);
+    }
+}
